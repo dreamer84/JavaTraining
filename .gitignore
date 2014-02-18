@@ -1,0 +1,9 @@
+# All class-files in all subdirectories
+*.class
+
+# All directories .settings with all content
+.settings/
+
+# Eclipse IDE's directories in the workspace
+/RemoteSystemsTempFiles/
+/.metadata/
