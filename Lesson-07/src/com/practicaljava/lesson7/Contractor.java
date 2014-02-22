@@ -4,7 +4,15 @@ package com.practicaljava.lesson7;
  * An Contractor object represent a person working as a contractor.
  */
 public class Contractor extends Person implements Payable {
-	
+
+	/*
+	Object
+	|
+	Person
+	|
+	Contractor----Payable
+	*/
+
 	/**
 	 * Initializes a new Contractor object
 	 * @param name the name of the new contractor
