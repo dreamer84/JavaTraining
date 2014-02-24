@@ -1,7 +1,7 @@
 package com.practicaljava.lesson7;
 
 /**
- * An Contractor object represent a person working as a contractor.
+ * A Contractor object represents a person working as a contractor.
  */
 public class Contractor extends Person implements Payable {
 

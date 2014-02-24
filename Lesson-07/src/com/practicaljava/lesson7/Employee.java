@@ -1,7 +1,7 @@
 package com.practicaljava.lesson7;
 
 /**
- * An Employee object represent a person working as an employee.
+ * An Employee object represents a person working as an employee.
  */
 public class Employee extends Person implements Payable {
 
