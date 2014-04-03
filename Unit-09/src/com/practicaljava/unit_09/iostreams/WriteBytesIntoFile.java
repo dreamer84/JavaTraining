@@ -1,6 +1,7 @@
 package com.practicaljava.unit_09.iostreams;
 
 import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -22,6 +23,10 @@ public class WriteBytesIntoFile {
 
 			System.out.println("All done!");
 
+		} catch (FileNotFoundException e) {
+			System.err.println("Error: file not found! (" + BINARY_FILE_NAME
+					+ ")");
+			System.exit(1);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
