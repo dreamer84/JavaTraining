@@ -4,6 +4,7 @@ package com.practicaljava.unit_09.serialization;
  * A manager.
  */
 public class Manager extends Employee {
+	private static final long serialVersionUID = 1L;
 	private double bonus;
 
 	public Manager(String name, double salary, int year, int month, int day) {
