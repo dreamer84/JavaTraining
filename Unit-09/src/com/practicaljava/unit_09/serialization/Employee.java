@@ -1,12 +1,13 @@
 package com.practicaljava.unit_09.serialization;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
  * An employee.
  */
-public class Employee {
+public class Employee implements Serializable {
 	private String name;
 	private double salary;
 	private Date hireDay;
