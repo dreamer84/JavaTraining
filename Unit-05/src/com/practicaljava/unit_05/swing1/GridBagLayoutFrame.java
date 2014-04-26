@@ -2,6 +2,8 @@ package com.practicaljava.unit_05.swing1;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,12 +30,13 @@ public class GridBagLayoutFrame extends JFrame {
 		panel.setLayout(layout);
 		add(panel);
 
+		// Input: First name
+
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.weightx = 100;
 		constraints.weighty = 100;
-		// Input: First name
 		JLabel labelFirstName = new JLabel("First name:");
 		panel.add(labelFirstName, constraints);
 
@@ -42,15 +45,16 @@ public class GridBagLayoutFrame extends JFrame {
 		constraints.gridy = 0;
 		constraints.weightx = 100;
 		constraints.weighty = 100;
-		JTextField textFieldFirstName = new JTextField(20);
+		final JTextField textFieldFirstName = new JTextField(20);
 		panel.add(textFieldFirstName, constraints);
+
+		// Input: Middle name
 
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 1;
 		constraints.weightx = 100;
 		constraints.weighty = 100;
-		// Input: Middle name
 		JLabel labelMiddleName = new JLabel("Middle name:");
 		panel.add(labelMiddleName, constraints);
 
@@ -59,15 +63,16 @@ public class GridBagLayoutFrame extends JFrame {
 		constraints.gridy = 1;
 		constraints.weightx = 100;
 		constraints.weighty = 100;
-		JTextField textFieldMiddleName = new JTextField(20);
+		final JTextField textFieldMiddleName = new JTextField(20);
 		panel.add(textFieldMiddleName, constraints);
+
+		// Input: Last name
 
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 2;
 		constraints.weightx = 100;
 		constraints.weighty = 100;
-		// Input: Last name
 		JLabel labelLastName = new JLabel("Last name:");
 		panel.add(labelLastName, constraints);
 
@@ -76,8 +81,10 @@ public class GridBagLayoutFrame extends JFrame {
 		constraints.gridy = 2;
 		constraints.weightx = 100;
 		constraints.weighty = 100;
-		JTextField textFieldLastName = new JTextField(20);
+		final JTextField textFieldLastName = new JTextField(20);
 		panel.add(textFieldLastName, constraints);
+
+		// Output: Combined name
 
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
@@ -85,18 +92,29 @@ public class GridBagLayoutFrame extends JFrame {
 		constraints.weightx = 100;
 		constraints.weighty = 100;
 		constraints.gridwidth = 2;
-		// Output: Combined name
-		JLabel labelCombName = new JLabel("-");
+		final JLabel labelCombName = new JLabel("-");
 		panel.add(labelCombName, constraints);
+
+		// Control buttons
 
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0;
 		constraints.gridy = 4;
 		constraints.weightx = 100;
 		constraints.weighty = 100;
-		// Buttons
+
 		JButton buttonGetFullName = new JButton("Get full name");
 		panel.add(buttonGetFullName, constraints);
+
+		buttonGetFullName.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				labelCombName.setText(textFieldFirstName.getText() + " "
+						+ textFieldMiddleName.getText() + " "
+						+ textFieldLastName.getText());
+			}
+		});
 
 		constraints = new GridBagConstraints();
 		constraints.gridx = 1;
@@ -105,6 +123,16 @@ public class GridBagLayoutFrame extends JFrame {
 		constraints.weighty = 100;
 		JButton buttonGetShortName = new JButton("Get short name");
 		panel.add(buttonGetShortName, constraints);
+
+		buttonGetShortName.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				labelCombName.setText(textFieldFirstName.getText().charAt(0)
+						+ ". " + textFieldMiddleName.getText().charAt(0) + ". "
+						+ textFieldLastName.getText());
+			}
+		});
 	}
 
 	public static void main(String[] args) {
