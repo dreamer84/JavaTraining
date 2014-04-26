@@ -13,9 +13,9 @@ import javax.swing.SwingUtilities;
 /**
  * A simple JFrame for playing with GridLayout.
  */
-public class GridLayoutFrame extends JFrame {
+public class GridBagLayoutFrame extends JFrame {
 
-	public GridLayoutFrame(String title) {
+	public GridBagLayoutFrame(String title) {
 		super(title);
 		initComponents();
 		pack();
@@ -113,7 +113,7 @@ public class GridLayoutFrame extends JFrame {
 
 			@Override
 			public void run() {
-				JFrame frame = new GridLayoutFrame(
+				JFrame frame = new GridBagLayoutFrame(
 						"Simple Frame with GridLayout");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				// Places the window in the center of the screen
