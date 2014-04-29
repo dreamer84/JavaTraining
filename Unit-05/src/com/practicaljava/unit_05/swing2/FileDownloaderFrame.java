@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Savepoint;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -29,6 +30,8 @@ import javax.swing.border.EmptyBorder;
 public class FileDownloaderFrame extends JFrame {
 	private final JProgressBar progressBar;
 	private final JLabel labelStatus;
+	private final JTextField textURL;
+	private final JTextField textSaveAs;
 
 	public FileDownloaderFrame(String title) {
 		super(title);
@@ -47,13 +50,13 @@ public class FileDownloaderFrame extends JFrame {
 		JLabel labelURL = new JLabel("Enter a URL:");
 		inputGroupPanel.add(labelURL);
 
-		final JTextField textURL = new JTextField(40);
+		textURL = new JTextField(40);
 		inputGroupPanel.add(textURL);
 
 		JLabel labelSaveAs = new JLabel("Save as:");
 		inputGroupPanel.add(labelSaveAs);
 
-		final JTextField textSaveAs = new JTextField("downloaded_file", 20);
+		textSaveAs = new JTextField("downloaded_file", 20);
 		inputGroupPanel.add(textSaveAs);
 
 		JButton buttonGet = new JButton("Download the file");
@@ -81,7 +84,7 @@ public class FileDownloaderFrame extends JFrame {
 
 				setStatus("Downloading...");
 
-				DownloadTask task = new DownloadTask(url);
+				DownloadTask task = new DownloadTask(url, textSaveAs.getText());
 				task.addPropertyChangeListener(new PropertyChangeListener() {
 
 					@Override
@@ -103,9 +106,7 @@ public class FileDownloaderFrame extends JFrame {
 		labelStatus.setText(status);
 	}
 
-	private void download(String fromURL) throws IOException {
-		String toFile = "downloaded_file";
-
+	private void download(String fromURL, String saveAs) throws IOException {
 		System.out.println("Downloading. Please wait...");
 
 		try {
@@ -116,7 +117,7 @@ public class FileDownloaderFrame extends JFrame {
 
 			try (BufferedInputStream in = new BufferedInputStream(
 					conn.getInputStream());
-					FileOutputStream fout = new FileOutputStream(toFile)) {
+					FileOutputStream fout = new FileOutputStream(saveAs)) {
 				int data;
 				while ((data = in.read()) != -1) {
 					fout.write(data);
@@ -134,19 +135,21 @@ public class FileDownloaderFrame extends JFrame {
 			e1.printStackTrace();
 		}
 
-		System.out.println(fromURL + " -> " + toFile + " OK");
+		System.out.println(fromURL + " -> " + saveAs + " OK");
 	}
 
 	private class DownloadTask extends SwingWorker<Void, String> {
 		private final String fromUrl;
+		private final String toFile;
 
-		public DownloadTask(String fromUrl) {
+		public DownloadTask(String fromUrl, String toFile) {
 			this.fromUrl = fromUrl;
+			this.toFile = toFile;
 		}
 
 		@Override
 		protected Void doInBackground() throws Exception {
-			download(fromUrl);
+			download(fromUrl, toFile);
 			return null;
 		}
 
