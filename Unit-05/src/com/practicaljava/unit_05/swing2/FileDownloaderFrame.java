@@ -12,8 +12,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.sql.Savepoint;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,8 +37,13 @@ public class FileDownloaderFrame extends JFrame {
 	private final JTextField textURL;
 	private final JTextField textSaveAs;
 
+	// Target URL content size (length)
+	private Long downloadUrlSize;
+
 	public FileDownloaderFrame(String title) {
 		super(title);
+
+		downloadUrlSize = null;
 
 		// Main panel
 
@@ -112,8 +121,9 @@ public class FileDownloaderFrame extends JFrame {
 		try {
 			URL url = new URL(fromURL);
 			URLConnection conn = url.openConnection();
-			System.out
-					.println("Content-Length: " + conn.getContentLengthLong());
+
+			// Saves the target URL content size
+			downloadUrlSize = conn.getContentLengthLong();
 
 			try (BufferedInputStream in = new BufferedInputStream(
 					conn.getInputStream());
@@ -133,6 +143,9 @@ public class FileDownloaderFrame extends JFrame {
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+
+		} finally {
+			downloadUrlSize = null;
 		}
 
 		System.out.println(fromURL + " -> " + saveAs + " OK");
@@ -149,7 +162,26 @@ public class FileDownloaderFrame extends JFrame {
 
 		@Override
 		protected Void doInBackground() throws Exception {
+			Timer timer = new Timer();
+			timer.scheduleAtFixedRate(new TimerTask() {
+				@Override
+				public void run() {
+					if (Files.exists(Paths.get(toFile))
+							&& !Files.isDirectory(Paths.get(toFile))) {
+						try {
+							System.out.println(Files.size(Paths.get(toFile)));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}, 500L, 500L);
+
 			download(fromUrl, toFile);
+
+			timer.cancel();
+
 			return null;
 		}
 
