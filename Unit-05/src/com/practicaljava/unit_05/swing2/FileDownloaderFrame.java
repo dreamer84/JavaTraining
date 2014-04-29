@@ -50,6 +50,12 @@ public class FileDownloaderFrame extends JFrame {
 		final JTextField textURL = new JTextField(40);
 		inputGroupPanel.add(textURL);
 
+		JLabel labelSaveAs = new JLabel("Save as:");
+		inputGroupPanel.add(labelSaveAs);
+
+		final JTextField textSaveAs = new JTextField("downloaded_file", 20);
+		inputGroupPanel.add(textSaveAs);
+
 		JButton buttonGet = new JButton("Download the file");
 		inputGroupPanel.add(buttonGet);
 
