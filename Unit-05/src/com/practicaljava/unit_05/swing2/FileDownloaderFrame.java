@@ -36,6 +36,7 @@ public class FileDownloaderFrame extends JFrame {
 	private final JLabel labelStatus;
 	private final JTextField textURL;
 	private final JTextField textSaveAs;
+	private final JButton buttonGet;
 
 	// Target URL content size (length)
 	private Long downloadUrlSize;
@@ -68,7 +69,7 @@ public class FileDownloaderFrame extends JFrame {
 		textSaveAs = new JTextField("downloaded_file", 20);
 		inputGroupPanel.add(textSaveAs);
 
-		JButton buttonGet = new JButton("Download the file");
+		buttonGet = new JButton("Download the file");
 		inputGroupPanel.add(buttonGet);
 
 		mainPanel.add(inputGroupPanel, BorderLayout.NORTH);
@@ -162,6 +163,9 @@ public class FileDownloaderFrame extends JFrame {
 
 		@Override
 		protected Void doInBackground() throws Exception {
+			// Disables UI controls
+			setUIControlsEnabled(false);
+
 			// Sets the progress bar to 0%
 			progressBar.setValue(progressBar.getMinimum());
 
@@ -208,7 +212,14 @@ public class FileDownloaderFrame extends JFrame {
 
 		@Override
 		protected void done() {
+			// Enables UI controls
+			setUIControlsEnabled(true);
+
 			setStatus("Done.");
 		}
+	}
+
+	public void setUIControlsEnabled(boolean enabled) {
+		buttonGet.setEnabled(enabled);
 	}
 }
