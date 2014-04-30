@@ -90,6 +90,12 @@ public class FileDownloaderFrame extends JFrame {
 		buttonGet.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// Disables UI controls
+				setUIControlsEnabled(false);
+
+				// Sets the progress bar to 0%
+				progressBar.setValue(progressBar.getMinimum());
+
 				String url = textURL.getText();
 
 				setStatus("Downloading...");
@@ -163,12 +169,6 @@ public class FileDownloaderFrame extends JFrame {
 
 		@Override
 		protected Void doInBackground() throws Exception {
-			// Disables UI controls
-			setUIControlsEnabled(false);
-
-			// Sets the progress bar to 0%
-			progressBar.setValue(progressBar.getMinimum());
-
 			// Deletes an existing file with the same name
 			Path file = Paths.get(toFile);
 			if (Files.exists(file) && !Files.isDirectory(file)) {
@@ -200,9 +200,6 @@ public class FileDownloaderFrame extends JFrame {
 			// Stops the "check-size" timer
 			timer.cancel();
 
-			// Sets the progress bar to 100%
-			progressBar.setValue(progressBar.getMaximum());
-
 			return null;
 		}
 
@@ -212,6 +209,9 @@ public class FileDownloaderFrame extends JFrame {
 
 		@Override
 		protected void done() {
+			// Sets the progress bar to 100%
+			progressBar.setValue(progressBar.getMaximum());
+
 			// Enables UI controls
 			setUIControlsEnabled(true);
 
