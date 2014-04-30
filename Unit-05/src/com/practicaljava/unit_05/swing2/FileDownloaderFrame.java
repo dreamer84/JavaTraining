@@ -162,14 +162,26 @@ public class FileDownloaderFrame extends JFrame {
 
 		@Override
 		protected Void doInBackground() throws Exception {
+			// Sets the progress bar to 0%
+			progressBar.setValue(progressBar.getMinimum());
+
+			// Deletes an existing file with the same name
+			Path file = Paths.get(toFile);
+			if (Files.exists(file) && !Files.isDirectory(file)) {
+				Files.delete(file);
+			}
+
+			// Creates and runs the timer for checking size of the downloading
+			// file
 			Timer timer = new Timer();
 			timer.scheduleAtFixedRate(new TimerTask() {
 				@Override
 				public void run() {
-					if (Files.exists(Paths.get(toFile))
-							&& !Files.isDirectory(Paths.get(toFile))) {
+					Path file = Paths.get(toFile);
+					if (Files.exists(file) && !Files.isDirectory(file)) {
 						try {
-							System.out.println(Files.size(Paths.get(toFile)));
+							long fileSize = Files.size(file);
+							setProgress((int) ((fileSize * 100) / downloadUrlSize));
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -178,9 +190,14 @@ public class FileDownloaderFrame extends JFrame {
 				}
 			}, 500L, 500L);
 
+			// Starts downloading
 			download(fromUrl, toFile);
 
+			// Stops the "check-size" timer
 			timer.cancel();
+
+			// Sets the progress bar to 100%
+			progressBar.setValue(progressBar.getMaximum());
 
 			return null;
 		}
