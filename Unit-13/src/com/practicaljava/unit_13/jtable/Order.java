@@ -12,4 +12,20 @@ public class Order {
 		this.quantity = quantity;
 		this.price = price;
 	}
+
+	public int getOrderID() {
+		return orderID;
+	}
+
+	public String getStockSymbol() {
+		return stockSymbol;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public double getPrice() {
+		return price;
+	}
 }
