@@ -12,6 +12,7 @@ import javax.swing.JPanel;
  * @author Sergey
  */
 public class SimpleFrame extends JFrame {
+	private static final long serialVersionUID = 1L;
 
 	public SimpleFrame(String title) {
 		super(title);

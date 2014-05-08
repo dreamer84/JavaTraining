@@ -32,6 +32,8 @@ import javax.swing.border.EmptyBorder;
  * A file downloader frame.
  */
 public class FileDownloaderFrame extends JFrame {
+	private static final long serialVersionUID = 1L;
+
 	private final JProgressBar progressBar;
 	private final JLabel labelStatus;
 	private final JTextField textURL;

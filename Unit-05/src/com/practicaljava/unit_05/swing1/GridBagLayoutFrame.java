@@ -16,6 +16,7 @@ import javax.swing.SwingUtilities;
  * A simple JFrame for playing with GridLayout.
  */
 public class GridBagLayoutFrame extends JFrame {
+	private static final long serialVersionUID = 1L;
 
 	public GridBagLayoutFrame(String title) {
 		super(title);
