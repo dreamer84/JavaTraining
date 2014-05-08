@@ -28,7 +28,7 @@ public class DerbyDbTest {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(dbURL);
-			
+
 		} catch (SQLException e) {
 			System.err.println("Can't connect to database: " + e.getMessage());
 			System.exit(1);
@@ -38,7 +38,7 @@ public class DerbyDbTest {
 		try {
 			Statement stmt = conn.createStatement();
 			ResultSet results = stmt.executeQuery("SELECT * FROM employees");
-			
+
 			while (results.next()) {
 				int emplId = results.getInt("empl_id");
 				String name = results.getString("name");
@@ -46,7 +46,7 @@ public class DerbyDbTest {
 
 				System.out.println(emplId + ", " + name + ", " + job);
 			}
-			
+
 			// * When a Statement object is closed, its current ResultSet object,
 			// if one exists, is also closed.
 			stmt.close();
